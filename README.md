@@ -34,5 +34,3 @@ python process_meeting.py recordings/meeting.mp4 --reanalyze
 ```
 
 `--force` re-transcribes. `--reanalyze` keeps the transcript and regenerates notes.
-
-Recordings, transcripts, and notes stay on disk and are not committed.
