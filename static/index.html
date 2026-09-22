@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeting notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app.css?v=list">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Recordings</p>
+        <h1>Meeting notes</h1>
+      </div>
+      <button class="dropzone" id="dropzone" type="button">
+        <strong>Drop a recording</strong>
+        <span>or click to choose an mp4</span>
+      </button>
+      <input id="file-input" type="file" accept="video/*,audio/*,.mp4,.m4a,.mp3,.webm,.mov,.mkv" hidden>
+      <input id="meet-input" type="file" accept=".pdf,application/pdf" hidden>
+      <label class="meeting-search">
+        <span class="visually-hidden">Search meetings</span>
+        <input id="meeting-search" type="search" placeholder="Search meetings" autocomplete="off">
+      </label>
+      <div class="meeting-filters" id="meeting-filters">
+        <button type="button" data-filter="all" class="active">All</button>
+        <button type="button" data-filter="ready">Analyzed</button>
+        <button type="button" data-filter="wait">To review</button>
+      </div>
+      <ul class="recordings" id="recording-list"></ul>
+    </aside>
+
+    <main class="main">
+      <section class="empty" id="empty-state">
+        <p class="eyebrow">No meeting selected</p>
+        <h2>Drop in a Google Meet recording, or find one in the list on the left.</h2>
+        <p>Notes, action items, and the transcript live in separate tabs. Timestamp citations jump the player to that moment. You can attach a Google Meet transcript PDF so speakers get real names; without it they stay Speaker A, B, C.</p>
+      </section>
+
+      <section class="workspace hidden" id="workspace">
+        <header class="toolbar">
+          <div>
+            <p class="eyebrow" id="meeting-date"></p>
+            <h2 id="meeting-title"></h2>
+            <p class="meta" id="meeting-meta"></p>
+            <p class="meta" id="meet-status"></p>
+          </div>
+          <div class="toolbar-actions">
+            <button class="ghost" id="meet-btn" type="button">Attach Meet PDF</button>
+            <button class="ghost hidden" id="meet-remove" type="button">Remove PDF</button>
+            <button class="ghost hidden" id="stop-btn" type="button">Stop</button>
+            <button class="primary" id="analyze-btn" type="button">Analyze</button>
+          </div>
+        </header>
+
+        <div class="progress hidden" id="progress">
+          <div class="progress-bar"><span id="progress-fill"></span></div>
+          <p id="progress-label">Starting</p>
+        </div>
+        <p class="status-line hidden" id="status-line"></p>
+
+        <div class="panes">
+          <section class="notes-pane">
+            <nav class="tabs" id="tabs">
+              <button type="button" data-tab="summary" class="active">Summary</button>
+              <button type="button" data-tab="notes">Notes</button>
+              <button type="button" data-tab="actions">Action items</button>
+              <button type="button" data-tab="decisions">Decisions</button>
+              <button type="button" data-tab="transcript">Transcript</button>
+            </nav>
+            <div class="tab-panels">
+              <article class="tab-panel" id="tab-summary"></article>
+              <article class="tab-panel hidden" id="tab-notes"></article>
+              <article class="tab-panel hidden" id="tab-actions"></article>
+              <article class="tab-panel hidden" id="tab-decisions"></article>
+              <article class="tab-panel hidden" id="tab-transcript"></article>
+            </div>
+          </section>
+
+          <section class="player-pane">
+            <div class="player-frame" id="player-frame">
+              <video id="player" controls playsinline preload="metadata"></video>
+              <p class="player-missing hidden" id="player-missing">No video file found for this meeting.</p>
+            </div>
+            <p class="now-playing" id="now-playing">Player idle</p>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/static/app.js?v=list"></script>
+</body>
+</html>
